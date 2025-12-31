@@ -12,6 +12,7 @@ import {
   SiCanva,
   SiOpenai,
   SiGoogle,
+  SiVercel,
 } from "react-icons/si";
 import { DiNodejsSmall } from "react-icons/di";
 import { FaCss3, FaFigma, FaHtml5 } from "react-icons/fa6";
@@ -30,6 +31,7 @@ const skills = [
   { icon: <SiFastapi />, name: "FastAPI" },
   { icon: <SiGit />, name: "Git" },
   { icon: <SiGithub />, name: "GitHub" },
+  { icon: <SiVercel />, name: "Vercel" },
   { icon: <FaFigma />, name: "Figma" },
   { icon: <SiOpenai />, name: "ChatGPT" },
   { icon: <SiGoogle />, name: "Gemini AI" },
