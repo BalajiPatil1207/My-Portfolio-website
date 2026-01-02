@@ -24,6 +24,7 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // numbers only for budget
     if (name === "budget" && !/^\d*$/.test(value)) return;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -89,7 +90,6 @@ export default function Contact() {
       <ParticlesBackground />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-
         {/* LEFT IMAGE */}
         <motion.div
           className="w-full md:w-1/2 flex justify-center"
@@ -100,13 +100,13 @@ export default function Contact() {
           <motion.img
             src={Astra}
             alt="Contact"
-            className="w-72 md:w-[400px] rounded-3xl shadow-2xl"
+            className="w-72 md:w-[400px] rounded-3xl shadow-2xl object-cover"
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>
 
-        {/* FORM */}
+        {/* RIGHT FORM */}
         <motion.div
           className="w-full md:w-1/2 bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20"
           initial={{ opacity: 0, x: 60 }}
@@ -118,35 +118,95 @@ export default function Contact() {
           </h2>
 
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            {/* NAME */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm opacity-80">
+                Your Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`p-3 rounded-xl bg-black/40 border ${
+                  errors.name ? "border-red-500" : "border-white/20"
+                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+              )}
+            </div>
 
-            {/* INPUT FIELD COMPONENT */}
-            {[
-              { label: "Your Name", name: "name", type: "text" },
-              { label: "Your Email", name: "email", type: "email" },
-              { label: "Service Needed", name: "service", type: "text" },
-              { label: "Budget", name: "budget", type: "text" },
-            ].map(({ label, name, type }) => (
-              <div key={name} className="flex flex-col">
-                <label className="mb-1 text-sm opacity-80">
-                  {label} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  required
-                  type={type}
-                  name={name}
-                  value={formData[name]}
-                  onChange={handleChange}
-                  className={`p-3 rounded-xl bg-black/40 border ${
-                    errors[name] ? "border-red-500" : "border-white/20"
-                  } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
-                />
-                {errors[name] && (
-                  <p className="text-red-500 text-xs mt-1">{errors[name]}</p>
-                )}
-              </div>
-            ))}
+            {/* EMAIL */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm opacity-80">
+                Your Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`p-3 rounded-xl bg-black/40 border ${
+                  errors.email ? "border-red-500" : "border-white/20"
+                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
+            </div>
 
-            {/* TEXTAREA */}
+            {/* SERVICE NEEDED (SELECT) */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm opacity-80">
+                Service Needed <span className="text-red-500">*</span>
+              </label>
+              <select
+                required
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+                className={`p-3 rounded-xl bg-black/40 border ${
+                  errors.service ? "border-red-500" : "border-white/20"
+                } text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+              >
+                <option value="" disabled>
+                  Something in mind?
+                </option>
+                <option value="Web Development">Web Development</option>
+                <option value="Mobile Application">Mobile Application</option>
+                <option value="UI/UX Design">UI / UX Design</option>
+                <option value="MERN Stack">MERN Stack</option>
+                <option value="Other">Other</option>
+              </select>
+              {errors.service && (
+                <p className="text-red-500 text-xs mt-1">{errors.service}</p>
+              )}
+            </div>
+
+            {/* BUDGET */}
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm opacity-80">
+                Budget <span className="text-red-500">*</span>
+              </label>
+              <input
+                required
+                type="text"
+                name="budget"
+                value={formData.budget}
+                onChange={handleChange}
+                className={`p-3 rounded-xl bg-black/40 border ${
+                  errors.budget ? "border-red-500" : "border-white/20"
+                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+              />
+              {errors.budget && (
+                <p className="text-red-500 text-xs mt-1">{errors.budget}</p>
+              )}
+            </div>
+
+            {/* IDEA */}
             <div className="flex flex-col">
               <label className="mb-1 text-sm opacity-80">
                 Project Idea <span className="text-red-500">*</span>
