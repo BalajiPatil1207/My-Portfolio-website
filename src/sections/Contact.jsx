@@ -24,7 +24,6 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // numbers only for budget
     if (name === "budget" && !/^\d*$/.test(value)) return;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -61,9 +60,11 @@ export default function Contact() {
         SERVICE_ID,
         TEMPLATE_ID,
         {
-          ...formData,
           from_name: formData.name,
           reply_to: formData.email,
+          service: formData.service,
+          budget: formData.budget,
+          idea: formData.idea,
         },
         PUBLIC_KEY
       );
@@ -119,58 +120,36 @@ export default function Contact() {
 
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             {/* NAME */}
-            <div className="flex flex-col">
-              <label className="mb-1 text-sm opacity-80">
-                Your Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                required
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={`p-3 rounded-xl bg-black/40 border ${
-                  errors.name ? "border-red-500" : "border-white/20"
-                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
-              />
-              {errors.name && (
-                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-              )}
-            </div>
+            <Input
+              label="Your Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              error={errors.name}
+            />
 
             {/* EMAIL */}
-            <div className="flex flex-col">
-              <label className="mb-1 text-sm opacity-80">
-                Your Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                required
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`p-3 rounded-xl bg-black/40 border ${
-                  errors.email ? "border-red-500" : "border-white/20"
-                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-              )}
-            </div>
+            <Input
+              label="Your Email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              error={errors.email}
+            />
 
-            {/* SERVICE NEEDED (SELECT) */}
+            {/* SERVICE */}
             <div className="flex flex-col">
               <label className="mb-1 text-sm opacity-80">
                 Service Needed <span className="text-red-500">*</span>
               </label>
               <select
-                required
                 name="service"
                 value={formData.service}
                 onChange={handleChange}
                 className={`p-3 rounded-xl bg-black/40 border ${
                   errors.service ? "border-red-500" : "border-white/20"
-                } text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+                } text-white`}
               >
                 <option value="" disabled>
                   Something in mind?
@@ -187,24 +166,13 @@ export default function Contact() {
             </div>
 
             {/* BUDGET */}
-            <div className="flex flex-col">
-              <label className="mb-1 text-sm opacity-80">
-                Budget <span className="text-red-500">*</span>
-              </label>
-              <input
-                required
-                type="text"
-                name="budget"
-                value={formData.budget}
-                onChange={handleChange}
-                className={`p-3 rounded-xl bg-black/40 border ${
-                  errors.budget ? "border-red-500" : "border-white/20"
-                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
-              />
-              {errors.budget && (
-                <p className="text-red-500 text-xs mt-1">{errors.budget}</p>
-              )}
-            </div>
+            <Input
+              label="Budget"
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
+              error={errors.budget}
+            />
 
             {/* IDEA */}
             <div className="flex flex-col">
@@ -212,36 +180,34 @@ export default function Contact() {
                 Project Idea <span className="text-red-500">*</span>
               </label>
               <textarea
-                required
                 rows="4"
                 name="idea"
                 value={formData.idea}
                 onChange={handleChange}
                 className={`p-3 rounded-xl bg-black/40 border ${
                   errors.idea ? "border-red-500" : "border-white/20"
-                } focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition`}
+                }`}
               />
               {errors.idea && (
                 <p className="text-red-500 text-xs mt-1">{errors.idea}</p>
               )}
             </div>
 
-            {/* BUTTON */}
             <button
               type="submit"
               disabled={status === "sending"}
-              className="mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition py-3 rounded-xl font-semibold shadow-lg disabled:opacity-60"
+              className="mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition py-3 rounded-xl font-semibold shadow-lg"
             >
               {status === "sending" ? "Sending..." : "Send Message"}
             </button>
 
             {status === "success" && (
-              <p className="text-green-400 text-sm text-center mt-3">
+              <p className="text-green-400 text-center mt-3">
                 Message sent successfully ✅
               </p>
             )}
             {status === "error" && (
-              <p className="text-red-500 text-sm text-center mt-3">
+              <p className="text-red-500 text-center mt-3">
                 Failed to send message ❌
               </p>
             )}
@@ -249,5 +215,26 @@ export default function Contact() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+/* ---------------- INPUT COMPONENT ---------------- */
+function Input({ label, name, value, onChange, error, type = "text" }) {
+  return (
+    <div className="flex flex-col">
+      <label className="mb-1 text-sm opacity-80">
+        {label} <span className="text-red-500">*</span>
+      </label>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className={`p-3 rounded-xl bg-black/40 border ${
+          error ? "border-red-500" : "border-white/20"
+        }`}
+      />
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+    </div>
   );
 }
