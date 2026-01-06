@@ -61,6 +61,7 @@ export default function Contact() {
         TEMPLATE_ID,
         {
           from_name: formData.name,
+          from_email: formData.email,
           reply_to: formData.email,
           service: formData.service,
           budget: formData.budget,
@@ -70,15 +71,20 @@ export default function Contact() {
       );
 
       setStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        service: "",
-        budget: "",
-        idea: "",
-      });
-    } catch (err) {
-      console.error("EmailJS Error:", err);
+
+      // Clear form after 4 seconds
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          service: "",
+          budget: "",
+          idea: "",
+        });
+        setStatus("");
+      }, 4000);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
       setStatus("error");
     }
   };
@@ -119,7 +125,6 @@ export default function Contact() {
           </h2>
 
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-            {/* NAME */}
             <Input
               label="Your Name"
               name="name"
@@ -128,7 +133,6 @@ export default function Contact() {
               error={errors.name}
             />
 
-            {/* EMAIL */}
             <Input
               label="Your Email"
               name="email"
@@ -149,10 +153,10 @@ export default function Contact() {
                 onChange={handleChange}
                 className={`p-3 rounded-xl bg-black/40 border ${
                   errors.service ? "border-red-500" : "border-white/20"
-                } text-white`}
+                }`}
               >
                 <option value="" disabled>
-                  Something in mind?
+                  Select service
                 </option>
                 <option value="Web Development">Web Development</option>
                 <option value="Mobile Application">Mobile Application</option>
@@ -165,7 +169,6 @@ export default function Contact() {
               )}
             </div>
 
-            {/* BUDGET */}
             <Input
               label="Budget"
               name="budget"
@@ -203,9 +206,11 @@ export default function Contact() {
 
             {status === "success" && (
               <p className="text-green-400 text-center mt-3">
-                Message sent successfully ✅
+                Thanks <b>{formData.name}</b>! I’ll contact you at{" "}
+                <b>{formData.email}</b> ✅
               </p>
             )}
+
             {status === "error" && (
               <p className="text-red-500 text-center mt-3">
                 Failed to send message ❌
