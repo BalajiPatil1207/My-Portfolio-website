@@ -141,7 +141,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-6 text-base sm:text-lg md:text-xl text-gray-300"
+            className="mt-6 text-base sm:text-lg md:text-xl text-gray-300 text-justify sm:text-left"
           >
             I turn complex ideas into seamless, high-impact web experiences by
             building modern, scalable, and lightning-fast MERN stack
@@ -175,7 +175,7 @@ const Home = () => {
           </motion.div>
 
           {/* Socials */}
-          <div className="mt-10 flex gap-5 text-2xl md:text-3xl">
+          <div className="mt-10 flex gap-5 justify-center md:justify-start text-2xl md:text-3xl sm:items-center">
             {socials.map(({ Icon, label, href }) => (
               <motion.a
                 key={label}

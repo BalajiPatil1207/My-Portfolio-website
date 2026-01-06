@@ -65,7 +65,7 @@ export default function About() {
 
             <p
               className="mt-4 text-gray-300 leading-relaxed text-base sm:text-lg
-    max-w-2xl md:max-w-3xl"
+  max-w-2xl md:max-w-3xl text-justify sm:text-left"
             >
               I build scalable, modern web applications with a strong focus on
               clean architecture and performance. I specialize in the MERN
@@ -119,17 +119,17 @@ export default function About() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.4 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 mt-3">
             About Me
           </h3>
 
-          <p className="text-gray-300 leading-relaxed text-base sm:text-lg">
+          <p className="text-gray-300 leading-relaxed text-base sm:text-lg text-justify sm:text-left">
             I'm a Software Developer and Web Developer, passionate about
             building fast, resilient applications with clean architecture and
             modern technologies.
           </p>
 
-          <p className="mt-4 text-gray-400 text-base sm:text-lg">
+          <p className="mt-4 text-gray-400 text-base sm:text-lg text-justify sm:text-left">
             I love turning ideas into scalable, user-friendly products that make
             a real impact.
           </p>
