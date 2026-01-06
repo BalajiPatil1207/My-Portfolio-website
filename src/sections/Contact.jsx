@@ -237,4 +237,4 @@ function Input({ label, name, value, onChange, error, type = "text" }) {
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
-}
+}  
